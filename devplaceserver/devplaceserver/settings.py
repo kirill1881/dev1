@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 import os
 from pathlib import Path
 
+from django.conf import settings
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -39,7 +41,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'devapp',
     'rest_framework',
+    'telebot',
 ]
+DJANGO_SETTINGS_MODULE=settings.configured
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

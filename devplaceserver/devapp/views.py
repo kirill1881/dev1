@@ -1,15 +1,17 @@
 from django.shortcuts import render
-from .models import User
+from .models import User, Manager
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 from rest_framework.renderers import TemplateHTMLRenderer, JSONRenderer
 from rest_framework.decorators import renderer_classes
 from django.core import serializers
 import datetime
+from . import bot
 
 
 def index(request):
     now = datetime.datetime.now()
+
     html = f'''
     <html>
         <body>
@@ -28,11 +30,18 @@ def add_user(request):
     user.comment = request.POST.get('comment')
     user.time = str(datetime.datetime.now())
     User.save(user)
+    bot.send_message_lead(user)
     return HttpResponse('item was created')
 
 
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
 def get_all_users(request):
     serializer = serializers.serialize('json', User.objects.all())
+    return HttpResponse(serializer, content_type='application/json')
+
+
+@renderer_classes((TemplateHTMLRenderer, JSONRenderer))
+def get_all_managers(request):
+    serializer = serializers.serialize('json', Manager.objects.all())
     return HttpResponse(serializer, content_type='application/json')
 
