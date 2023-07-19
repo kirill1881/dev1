@@ -78,8 +78,12 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'verceldb',
+        'USER': 'default',
+        'PASSWORD': '2mWRcrpgdxu4',
+        'HOST': 'ep-frosty-tooth-967858-pooler.us-east-1.postgres.vercel-storage.com',
+        'PORT': '5432',
     }
 }
 
