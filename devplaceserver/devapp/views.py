@@ -24,13 +24,22 @@ def index(request):
 
 @csrf_exempt
 def add_user(request):
-    user = User()
-    user.name = request.POST.get('name')
-    user.contact = request.POST.get('contact')
-    user.comment = request.POST.get('comment')
-    user.time = str(datetime.datetime.now())
-    User.save(user)
-    bot.send_message_lead(user)
+    try:
+        user = User()
+        user.name = request.POST.get('name')
+        user.contact = request.POST.get('contact')
+        user.comment = request.POST.get('comment')
+        user.time = str(datetime.datetime.now())
+        User.save(user)
+        bot.send_message_lead(user)
+    except Exception as e:
+        print(e)
+        print(request.POST.get('name'))
+        print(request.POST.get('contact'))
+        try:
+            bot.send_lead(request.POST.get('contact'))
+        except Exception:
+            pass
     return HttpResponse('item was created')
 
 
