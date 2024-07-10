@@ -34,6 +34,10 @@ def add_user(request):
         user.time = str(datetime.datetime.now())
         User.save(user)
         bot.send_message_lead(user)
+        return JsonResponse({
+            'status': 'success',
+            'message': 'User was created successfully.'
+        })
 
     except Exception as e:
         print(e)
@@ -43,10 +47,7 @@ def add_user(request):
             bot.send_lead(request.POST.get('contact'))
         except Exception:
             pass
-    return JsonResponse({
-        'status': 'success',
-        'message': 'User was created successfully.'
-    })
+    return "null"
 
 
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
