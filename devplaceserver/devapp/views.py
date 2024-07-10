@@ -36,7 +36,7 @@ def add_user(request):
         bot.send_message_lead(user)
         return JsonResponse({
             'status': 'success',
-            'message': 'User was created successfully.'
+            'message': 'Наши менеджеры скоро свяжутся с вами. Хорошего вам дня!'
         })
 
     except Exception as e:
