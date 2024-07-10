@@ -7,6 +7,8 @@ from rest_framework.decorators import renderer_classes
 from django.core import serializers
 import datetime
 from . import bot
+from django.http import JsonResponse
+
 
 
 def index(request):
@@ -32,6 +34,7 @@ def add_user(request):
         user.time = str(datetime.datetime.now())
         User.save(user)
         bot.send_message_lead(user)
+
     except Exception as e:
         print(e)
         print(request.POST.get('name'))
@@ -40,7 +43,10 @@ def add_user(request):
             bot.send_lead(request.POST.get('contact'))
         except Exception:
             pass
-    return HttpResponse('item was created')
+    return JsonResponse({
+        'status': 'success',
+        'message': 'User was created successfully.'
+    })
 
 
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
