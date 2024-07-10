@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'devapp',
     'rest_framework',
     'telebot',
+    'corsheaders',
+
 ]
 DJANGO_SETTINGS_MODULE=settings.configured
 
@@ -54,6 +56,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'devplaceserver.urls'
@@ -73,6 +76,8 @@ TEMPLATES = [
         },
     },
 ]
+
+CORS_ALLOW_ALL_ORIGINS = True  # Разрешает запросы со всех доменов
 
 WSGI_APPLICATION = 'devplaceserver.wsgi.application'
 
