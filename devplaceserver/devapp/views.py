@@ -37,7 +37,7 @@ def add_user(request):
         return JsonResponse({
             'status': 'success',
             'message': 'User was created successfully.'
-        })
+        }, status=200)
 
     except Exception as e:
         print(e)
