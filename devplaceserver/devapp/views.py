@@ -8,7 +8,7 @@ from django.core import serializers
 import datetime
 from . import bot
 from django.http import JsonResponse
-import RekasoBot
+from . import RekasoBot
 
 
 
