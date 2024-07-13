@@ -12,3 +12,5 @@ class Manager(models.Model):
     name = models.CharField(max_length=255)
     chat_id = models.CharField(max_length=255)
     username = models.CharField(max_length=255)
+
+

@@ -8,6 +8,7 @@ from django.core import serializers
 import datetime
 from . import bot
 from django.http import JsonResponse
+import RekasoBot
 
 
 
@@ -60,4 +61,11 @@ def get_all_users(request):
 def get_all_managers(request):
     serializer = serializers.serialize('json', Manager.objects.all())
     return HttpResponse(serializer, content_type='application/json')
+
+@csrf_exempt
+def add_rekaso(request):
+    RekasoBot.send_order(request.POST.get('order'), request.POST.get('phone'), request.POST.get('tovar'))
+    return JsonResponse({})
+
+
 
