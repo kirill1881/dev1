@@ -1,5 +1,4 @@
 import telebot
-from models import RekasoManager
 import datetime
 
 #794818784
