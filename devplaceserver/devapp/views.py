@@ -9,7 +9,6 @@ import datetime
 from . import bot
 from django.http import JsonResponse
 from . import RekasoBot
-import json
 
 
 
@@ -65,26 +64,8 @@ def get_all_managers(request):
 
 @csrf_exempt
 def add_rekaso(request):
-    if request.method == 'POST':
-        # Попытка извлечь данные из поля 'order'
-        order_data = request.POST.get('order')
-        if order_data:
-            try:
-                # Преобразование строки в JSON
-                order_dict = json.loads(order_data)
-                name = order_dict.get('name')
-                phone = order_dict.get('phone')
-                tovar = order_dict.get('tovar')
-
-                # Отправка данных в бот
-                RekasoBot.send_order(name, phone, tovar)
-                return JsonResponse({'status': 'success'})
-            except json.JSONDecodeError:
-                return JsonResponse({'status': 'error', 'message': 'Invalid JSON data'})
-        else:
-            return JsonResponse({'status': 'error', 'message': 'Order data missing'})
-
-    return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
+    RekasoBot.send_order(request.POST.get('name'), request.POST.get('phone'), request.POST.get('tovar'))
+    return JsonResponse({})
 
 
 
