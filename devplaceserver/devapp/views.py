@@ -62,6 +62,7 @@ def get_all_managers(request):
     serializer = serializers.serialize('json', Manager.objects.all())
     return HttpResponse(serializer, content_type='application/json')
 
+
 @csrf_exempt
 def add_rekaso(request):
     RekasoBot.send_order(request.POST.get('name'), request.POST.get('phone'), request.POST.get('tovar'))
