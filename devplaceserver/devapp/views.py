@@ -64,7 +64,7 @@ def get_all_managers(request):
 
 @csrf_exempt
 def add_rekaso(request):
-    RekasoBot.send_order(request.POST.get('order'), request.POST.get('phone'), request.POST.get('tovar'))
+    RekasoBot.send_order(request.POST.get('name'), request.POST.get('phone'), request.POST.get('tovar'))
     return JsonResponse({})
 
 
