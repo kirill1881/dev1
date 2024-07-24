@@ -10,6 +10,8 @@ from . import bot
 from django.http import JsonResponse
 from . import RekasoBot
 
+import threading
+
 
 
 def index(request):
@@ -25,6 +27,7 @@ def index(request):
     '''
     return HttpResponse(html)
 
+
 @csrf_exempt
 def add_user(request):
     try:
@@ -34,7 +37,10 @@ def add_user(request):
         user.comment = request.POST.get('comment')
         user.time = str(datetime.datetime.now())
         User.save(user)
-        bot.send_message_lead(user)
+
+        # Отправка сообщения в отдельном потоке
+        threading.Thread(target=send_message_in_thread, args=(user,)).start()
+
         return JsonResponse({
             'status': 'success',
             'message': 'Наши менеджеры скоро свяжутся с вами. Хорошего вам дня!'
@@ -48,7 +54,18 @@ def add_user(request):
             bot.send_lead(request.POST.get('contact'))
         except Exception:
             pass
-    return "null"
+        return JsonResponse({'status': 'error', 'message': 'Произошла ошибка, попробуйте позже.'})
+
+
+def send_message_in_thread(user):
+    try:
+        bot.send_message_lead(user)
+    except Exception as e:
+        print(f"Error sending message: {e}")
+        try:
+            bot.send_lead(user.contact)
+        except Exception as e:
+            print(f"Error sending lead: {e}")
 
 
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
